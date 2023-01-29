@@ -4,7 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql network concurrent
+
+CONFIG += c++17
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,13 +27,29 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    apismodel.cpp \
+    database.cpp \
+    apigetter.cpp \
+    apimodel.cpp \
+    apiparser.cpp \
+    apicacheupdatedaemon.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    apismodel.h \
+    database.h \
+    apigetter.h \
+    apimodel.h \
+    apiparser.h \
+    apicacheupdatedaemon.h
 
 FORMS += \
         mainwindow.ui
 
 OTHER_FILES += \
-    .gitignore
+    .gitignore \
+    apis.db.sql
+
+DISTFILES += \
+    readme.md
