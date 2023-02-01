@@ -3,7 +3,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
-ApiParser::ApiParser(const QByteArray &&text, size_t api_id) :
+ApiParser::ApiParser(const QByteArray &&text, qlonglong api_id) :
     m_text(std::move(text)),
     m_api_id(api_id)
 {

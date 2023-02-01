@@ -48,8 +48,10 @@ void ApiCacheUpdateDaemon::onUpdateRequested()
 {
     if (!m_isRunning)
         return;
+    while (m_apiElementsModel->canFetchMore())
+        m_apiElementsModel->fetchMore();
     m_apiElementsModel->clear();
-
+    m_apiElementsModel->submitAll();
     for (int row = 0; row < m_apisModel->rowCount(); ++row)
     {
         m_apisList.append(m_apisModel->record(row));

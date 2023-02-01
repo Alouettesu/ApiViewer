@@ -33,7 +33,8 @@ SOURCES += \
     apigetter.cpp \
     apimodel.cpp \
     apiparser.cpp \
-    apicacheupdatedaemon.cpp
+    apicacheupdatedaemon.cpp \
+    elementsmodel.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -42,7 +43,8 @@ HEADERS += \
     apigetter.h \
     apimodel.h \
     apiparser.h \
-    apicacheupdatedaemon.h
+    apicacheupdatedaemon.h \
+    elementsmodel.h
 
 FORMS += \
         mainwindow.ui

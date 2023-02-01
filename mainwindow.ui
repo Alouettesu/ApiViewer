@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>984</width>
-    <height>575</height>
+    <width>1182</width>
+    <height>643</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,18 +19,18 @@
      <rect>
       <x>20</x>
       <y>10</y>
-      <width>651</width>
-      <height>192</height>
+      <width>341</width>
+      <height>551</height>
      </rect>
     </property>
    </widget>
    <widget class="QTableView" name="apiElementsView">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>220</y>
-      <width>651</width>
-      <height>192</height>
+      <x>370</x>
+      <y>10</y>
+      <width>801</width>
+      <height>551</height>
      </rect>
     </property>
    </widget>
@@ -40,7 +40,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>984</width>
+     <width>1182</width>
      <height>30</height>
     </rect>
    </property>

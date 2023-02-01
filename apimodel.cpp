@@ -25,7 +25,6 @@ ApiModel::~ApiModel()
 void ApiModel::insertApiElement(const ApiElementRecord &record)
 {
     insertApiElementInternal(record);
-//    submitAll();
 }
 
 void ApiModel::insertApiElement(const QList<ApiElementRecord> &elements)
@@ -34,13 +33,11 @@ void ApiModel::insertApiElement(const QList<ApiElementRecord> &elements)
     {
         insertApiElementInternal(element);
     }
-//    submitAll();
 }
 
 void ApiModel::clear()
 {
     removeRows(0, rowCount());
-//    submitAll();
 }
 
 void ApiModel::insertApiElementInternal(const ApiElementRecord &record)

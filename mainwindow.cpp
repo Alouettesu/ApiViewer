@@ -7,6 +7,7 @@
 #include "apigetter.h"
 #include "apiparser.h"
 #include "apicacheupdatedaemon.h"
+#include "elementsmodel.h"
 
 #include <QFile>
 #include <QMetaObject>
@@ -21,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ApisModel *model = new ApisModel(this, db.db());
-    ApiModel *apiModel = new ApiModel(this, db.db());
+    ElementsModel *apiModel = new ElementsModel(this, db.db());
     daemon = new ApiCacheUpdateDaemon(db.db());
     ui->setupUi(this);
 
@@ -29,8 +30,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->apisView->hideColumn(0);
 
     ui->apiElementsView->setModel(apiModel);
-    ui->apiElementsView->hideColumn(0);
-
+    ui->apiElementsView->hideColumn(ElementsModel::Api_id);
+    ui->apiElementsView->hideColumn(ElementsModel::Id);
+    ui->apiElementsView->hideColumn(ElementsModel::comment_id);
+    ui->apiElementsView->setColumnWidth(ElementsModel::operationId, 200);
+    ui->apiElementsView->setColumnWidth(ElementsModel::comment, 150);
+    ui->apiElementsView->setColumnWidth(ElementsModel::summary, 200);
 
 }
 
