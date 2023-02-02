@@ -50,8 +50,13 @@ FORMS += \
         mainwindow.ui
 
 OTHER_FILES += \
-    .gitignore \
-    apis.db.sql
+    .gitignore
 
 DISTFILES += \
     readme.md
+
+RESOURCES += \
+    dbresource.qrc
+
+QMAKE_CLEAN += \
+    apis.db

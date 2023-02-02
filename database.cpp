@@ -3,23 +3,26 @@
 #include <QSqlQuery>
 #include <QDebug>
 #include <QSqlError>
-
-//#include "apis.db.inc"
+#include <QDir>
+#include <QDirIterator>
 
 Database::Database()
 {
     QString path = "apis.db";
-//    bool dbExists = QFile::exists(path);
-    m_db = QSqlDatabase::addDatabase("QSQLITE");//not dbConnection
+    bool dbExists = QFile::exists(path);
+    if (!dbExists)
+    {
+        Q_INIT_RESOURCE(dbresource);
+        QFile file(":/dbFiles/apis.db");
+        file.copy(path);
+        QFile targetDbFile(path);
+        qDebug() << targetDbFile.setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner);
+    }
+
+    m_db = QSqlDatabase::addDatabase("QSQLITE");
     m_db.setDatabaseName(path);
     m_db.open();
 
-//    if (!dbExists)
-//    {
-//        QSqlQuery query(m_db);
-//        query.exec(QString(apis_db_sql));
-//        qDebug() << query.lastError();
-//    }
 }
 
 Database::~Database()

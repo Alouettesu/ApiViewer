@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/dbFiles" lang="c++">
+        <file>apis.db</file>
+    </qresource>
+</RCC>
