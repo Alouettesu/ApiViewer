@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/qml">
+        <file>qtquickcontrols2.conf</file>
+        <file>Page2Form.qml</file>
+        <file>ApiElementsView.qml</file>
+        <file>main.qml</file>
+        <file>HomeForm.qml</file>
+    </qresource>
+</RCC>

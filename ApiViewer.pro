@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql network concurrent
+QT       += core gui sql network concurrent quick
 
 CONFIG += c++17
 
@@ -34,7 +34,9 @@ SOURCES += \
     apimodel.cpp \
     apiparser.cpp \
     apicacheupdatedaemon.cpp \
-    elementsmodel.cpp
+    elementsmodel.cpp \
+    apiscontroller.cpp \
+    apielementscontroller.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -44,7 +46,9 @@ HEADERS += \
     apimodel.h \
     apiparser.h \
     apicacheupdatedaemon.h \
-    elementsmodel.h
+    elementsmodel.h \
+    apiscontroller.h \
+    apielementscontroller.h
 
 FORMS += \
         mainwindow.ui
@@ -55,8 +59,15 @@ OTHER_FILES += \
 DISTFILES += \
     readme.md
 
+# Additional import path used to resolve QML modules in Qt Creator's code model
+QML_IMPORT_PATH =
+
+# Additional import path used to resolve QML modules just for Qt Quick Designer
+QML_DESIGNER_IMPORT_PATH =
+
 RESOURCES += \
-    dbresource.qrc
+    dbresource.qrc \
+    qml/qml.qrc
 
 QMAKE_CLEAN += \
     apis.db
