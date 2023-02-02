@@ -21,7 +21,9 @@ ElementsModel::ElementsModel(QObject *parent, QSqlDatabase db) :
              elements.summary as summary,\
              comments.id as comment_id,\
              comments.comment as comment\
-         FROM elements LEFT JOIN comments ON comments.operationId==elements.operationId");
+         FROM elements LEFT JOIN comments ON comments.operationId==elements.operationId\
+         WHERE elements.api_id==:api_id");
+    m_selectQuery.bindValue(QString(":api_id"), QVariant(QVariant::ULongLong, 0));
     m_selectQuery.exec();
     m_insertQuery.prepare("INSERT INTO comments (operationId, api_id, comment) VALUES (:operationId, :api_id, :comment)");
     m_updateQuery.prepare("UPDATE comments SET comment=:comment WHERE id=:comment_id");
@@ -103,4 +105,16 @@ Qt::ItemFlags ElementsModel::flags(const QModelIndex &index) const
         result |= Qt::ItemIsEditable;
     }
     return result;
+}
+
+void ElementsModel::setApi(qulonglong api_id)
+{
+    m_selectQuery.bindValue(QString(":api_id"), api_id);
+    refresh();
+}
+
+void ElementsModel::refresh()
+{
+    m_selectQuery.exec();
+    setQuery(m_selectQuery);
 }

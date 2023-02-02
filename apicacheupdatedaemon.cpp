@@ -39,7 +39,7 @@ void ApiCacheUpdateDaemon::finish()
     QMetaObject::invokeMethod(m_timer, &QTimer::stop, Qt::QueuedConnection);
     cancelRequests();
     QApplication::processEvents();
-
+//12600
     m_futureRunningMutex.lock();
     //Просто ждём, пока запущенные процессы завершатся
     m_futureRunningMutex.unlock();
@@ -87,7 +87,8 @@ void ApiCacheUpdateDaemon::onAllRequestsFinished()
     m_apiElementsModel->submitAll();
     if (m_isRunning)
     {
-        m_timer->setInterval(5000);
+        emit updated();
+        m_timer->setInterval(500000);
         m_timer->start();
     }
     m_apisList.clear();

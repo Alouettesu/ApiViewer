@@ -12,6 +12,8 @@
 #include <QFile>
 #include <QMetaObject>
 #include <QMessageBox>
+#include <QTimer>
+#include <QItemSelection>
 
 Database db;
 ApiCacheUpdateDaemon *daemon;
@@ -21,21 +23,25 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    ApisModel *model = new ApisModel(this, db.db());
-    ElementsModel *apiModel = new ElementsModel(this, db.db());
+    m_apisListModel = new ApisModel(this, db.db());
+    m_apiElementsModel = new ElementsModel(this, db.db());
     daemon = new ApiCacheUpdateDaemon(db.db());
     ui->setupUi(this);
 
-    ui->apisView->setModel(model);
-    ui->apisView->hideColumn(0);
+    ui->apisView->setModel(m_apisListModel);
+    ui->apisView->hideColumn(ApisModel::Column_Id);
 
-    ui->apiElementsView->setModel(apiModel);
+    ui->apiElementsView->setModel(m_apiElementsModel);
     ui->apiElementsView->hideColumn(ElementsModel::Api_id);
     ui->apiElementsView->hideColumn(ElementsModel::Id);
     ui->apiElementsView->hideColumn(ElementsModel::comment_id);
     ui->apiElementsView->setColumnWidth(ElementsModel::operationId, 200);
     ui->apiElementsView->setColumnWidth(ElementsModel::comment, 150);
     ui->apiElementsView->setColumnWidth(ElementsModel::summary, 200);
+    connect(daemon, &ApiCacheUpdateDaemon::updated, this, &MainWindow::onApiUpdated, Qt::QueuedConnection);
+    connect(ui->apisView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::onApisSelectionChanged);
+    if (m_apisListModel->rowCount() > 0)
+        ui->apisView->selectionModel()->select(m_apisListModel->index(0, 0), QItemSelectionModel::Select);
     daemon->start();
 }
 
@@ -57,4 +63,21 @@ bool MainWindow::event(QEvent *event)
         return QMainWindow::event(event);
     }
     return QMainWindow::event(event);
+}
+
+void MainWindow::onApiUpdated()
+{
+    m_apiElementsModel->refresh();
+}
+
+void MainWindow::onApisSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
+{
+    Q_UNUSED(deselected);
+    if (selected.indexes().count() == 1)
+    {
+        QModelIndex selectedIndex = selected.indexes().at(0);
+        int row = selectedIndex.row();
+        qulonglong apiId = m_apisListModel->index(row, ApisModel::Column_Id).data().toULongLong();
+        m_apiElementsModel->setApi(apiId);
+    }
 }

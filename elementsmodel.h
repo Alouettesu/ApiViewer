@@ -52,6 +52,10 @@ public:
      */
     Qt::ItemFlags flags(const QModelIndex &index) const override;
 
+    void setApi(qulonglong api_id);
+
+    void refresh();
+
 private:
     QSqlDatabase m_db;
     QSqlQuery m_selectQuery;

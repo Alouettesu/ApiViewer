@@ -30,6 +30,8 @@ public:
 signals:
     void finished();
 
+    void updated();
+
 public slots:
 
 private slots:
