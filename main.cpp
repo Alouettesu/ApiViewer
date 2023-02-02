@@ -16,6 +16,11 @@
 
 #include "apiscontroller.h"
 #include "apielementscontroller.h"
+#include "database.h"
+#include "apicacheupdatedaemon.h"
+
+Database db;
+ApiCacheUpdateDaemon *daemon;
 
 int main(int argc, char *argv[])
 {
@@ -25,10 +30,17 @@ int main(int argc, char *argv[])
     qmlRegisterType<ApisController>("MyControllers", 1, 0, "ApisController");
     qmlRegisterType<ApiElementsController>("MyControllers", 1, 0, "ApiElementsController");
 
+    daemon = new ApiCacheUpdateDaemon();
+    QObject::connect(&app, &QGuiApplication::aboutToQuit, &app, [daemon](){
+        daemon->finish();
+    });
+    daemon->start();
+
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;
+
 
     return app.exec();
 }

@@ -20,7 +20,7 @@ class ApiCacheUpdateDaemon : public QObject
 {
     Q_OBJECT
 public:
-    explicit ApiCacheUpdateDaemon(QSqlDatabase db);
+    explicit ApiCacheUpdateDaemon(QSqlDatabase db = QSqlDatabase());
 
     ~ApiCacheUpdateDaemon();
 

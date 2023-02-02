@@ -27,7 +27,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
+#        mainwindow.cpp \
     apismodel.cpp \
     database.cpp \
     apigetter.cpp \
@@ -39,7 +39,7 @@ SOURCES += \
     apielementscontroller.cpp
 
 HEADERS += \
-        mainwindow.h \
+#        mainwindow.h \
     apismodel.h \
     database.h \
     apigetter.h \
