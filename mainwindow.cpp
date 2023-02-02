@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->apiElementsView->setColumnWidth(ElementsModel::operationId, 200);
     ui->apiElementsView->setColumnWidth(ElementsModel::comment, 150);
     ui->apiElementsView->setColumnWidth(ElementsModel::summary, 200);
-
+    daemon->start();
 }
 
 MainWindow::~MainWindow()

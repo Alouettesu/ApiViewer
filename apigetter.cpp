@@ -2,18 +2,28 @@
 #include <QUrl>
 #include <QDebug>
 
-ApiGetter::ApiGetter(QString apiUrl, QObject *parent) : QObject(parent)
+ApiGetter::ApiGetter(QString apiUrl, QObject *parent) :
+    QObject(parent),
+    m_reply(nullptr)
 {
     m_network = new QNetworkAccessManager(this);
     QUrl url(apiUrl);
     m_request = QNetworkRequest(url);
     connect(m_network, qOverload<QNetworkReply*>(&QNetworkAccessManager::finished), this, &ApiGetter::onRequestFinished);
-    m_network->get(m_request);
+//    m_network->get(m_request);
 }
 
 void ApiGetter::perform()
 {
-    m_network->get(m_request);
+    m_reply = m_network->get(m_request);
+}
+
+void ApiGetter::cancel()
+{
+    if (m_reply != nullptr)
+    {
+        m_reply->abort();
+    }
 }
 
 void ApiGetter::onRequestFinished(QNetworkReply *reply)
@@ -29,5 +39,10 @@ void ApiGetter::onRequestFinished(QNetworkReply *reply)
             m_result = std::move(reply->readAll());
             emit ApiRecieved(m_result);
         }
+    }
+    else if (reply->error() == QNetworkReply::OperationCanceledError)
+    {
+        QByteArray r;
+        emit ApiRecieved(r);
     }
 }

@@ -14,6 +14,7 @@
 
 #include "apismodel.h"
 #include "apimodel.h"
+#include "apigetter.h"
 
 class ApiCacheUpdateDaemon : public QObject
 {
@@ -22,17 +23,22 @@ public:
     explicit ApiCacheUpdateDaemon(QSqlDatabase db);
 
     ~ApiCacheUpdateDaemon();
+
+    void finish();
+    void start();
+
 signals:
     void finished();
 
 public slots:
-    void finish();
 
 private slots:
+    void onStartRequested();
     void onUpdateRequested();
     void onAllRequestsFinished();
 
     void processDocument(const QSqlRecord &record);
+    void cancelRequests();
 
 private:
     QThread m_thread;
@@ -45,6 +51,10 @@ private:
     QFuture<void> m_allRequestsFuture;
     QFutureWatcher<void> m_allRequestsFutureWatcher;
     std::atomic_bool m_isRunning;
+
+    QList<ApiGetter*> m_runningProcesses;
+    QMutex m_runningProcessesMutex;
+    QMutex m_futureRunningMutex;
 };
 
 #endif // APICACHEUPDATEDAEMON_H

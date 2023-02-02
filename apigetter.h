@@ -18,12 +18,14 @@ signals:
 
 public slots:
     void perform();
+    void cancel();
 
 private slots:
     void onRequestFinished(QNetworkReply *reply);
 private:
     QNetworkAccessManager *m_network;
     QNetworkRequest m_request;
+    QNetworkReply *m_reply;
     QByteArray m_result;
 };
 
