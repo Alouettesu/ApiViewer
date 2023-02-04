@@ -5,7 +5,6 @@ ApiElementsController::ApiElementsController(QSqlDatabase db, QObject *parent) :
     m_db(db)
 {
     m_elementsModel = new ElementsModel(this, m_db);
-//    m_elementsModel->setApi(1);
 }
 
 ElementsModel *ApiElementsController::elementsModel()
