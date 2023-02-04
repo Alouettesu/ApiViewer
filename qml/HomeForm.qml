@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick.Controls 2.15
 import MyControllers 1.0
 
 Page {
@@ -15,10 +15,15 @@ Page {
     }
 
     TableView {
-        anchors.fill: parent
+        id: tableView
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.top: horizontalHeader.bottom
         columnSpacing: 1
         rowSpacing: 1
         clip: true
+        boundsBehavior: Flickable.StopAtBounds
 
         model: controller.model
 
@@ -28,11 +33,11 @@ Page {
         delegate: Rectangle {
             implicitWidth: 100
             implicitHeight: 50
-            border.color: "black"
-            border.width: 1
+            color: "#efefef"
             clip: true
             Text {
                 clip: true
+                padding: 12
                 text: display
                 anchors.margins: 2
                 wrapMode: Text.WrapAnywhere
@@ -44,8 +49,12 @@ Page {
                     apiSelected(api_id)
                 }
             }
-
         }
+    }
 
+    HorizontalHeaderView {
+        id: horizontalHeader
+        syncView: tableView
+        anchors.left: tableView.left
     }
 }

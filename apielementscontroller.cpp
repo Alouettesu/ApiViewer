@@ -24,3 +24,8 @@ void ApiElementsController::setApiId(qulonglong id)
     m_elementsModel->setApi(m_apiId);
     emit apiIdChanged();
 }
+
+void ApiElementsController::refreshModel()
+{
+    m_elementsModel->refresh();
+}

@@ -36,7 +36,8 @@ SOURCES += \
     apicacheupdatedaemon.cpp \
     elementsmodel.cpp \
     apiscontroller.cpp \
-    apielementscontroller.cpp
+    apielementscontroller.cpp \
+    apielementcommentmodel.cpp
 
 HEADERS += \
 #        mainwindow.h \
@@ -48,7 +49,8 @@ HEADERS += \
     apicacheupdatedaemon.h \
     elementsmodel.h \
     apiscontroller.h \
-    apielementscontroller.h
+    apielementscontroller.h \
+    apielementcommentmodel.h
 
 FORMS += \
         mainwindow.ui

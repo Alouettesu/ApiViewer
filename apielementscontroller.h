@@ -19,6 +19,7 @@ public:
     ElementsModel *elementsModel();
     qulonglong apiId();
     void setApiId(qulonglong id);
+    void refreshModel();
 signals:
 
     void apiIdChanged();

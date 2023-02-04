@@ -18,6 +18,7 @@
 #include "apielementscontroller.h"
 #include "database.h"
 #include "apicacheupdatedaemon.h"
+#include "apielementcommentmodel.h"
 
 Database db;
 ApiCacheUpdateDaemon *daemon;
@@ -29,6 +30,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     qmlRegisterType<ApisController>("MyControllers", 1, 0, "ApisController");
     qmlRegisterType<ApiElementsController>("MyControllers", 1, 0, "ApiElementsController");
+    qmlRegisterType<ApiElementCommentModel>("MyControllers", 1, 0, "ApiElementCommentModel");
 
     daemon = new ApiCacheUpdateDaemon();
     QObject::connect(&app, &QGuiApplication::aboutToQuit, &app, [daemon](){

@@ -1,5 +1,6 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick.Controls 2.15
+
 ApplicationWindow {
     id: window
     visible: true
@@ -12,13 +13,17 @@ ApplicationWindow {
 
         ToolButton {
             id: toolButton
-            text: stackView.depth > 1 ? "\u25C0" : "\u2630"
+            text: stackView.depth > 1 ? "\u25C0" : ""
             font.pixelSize: Qt.application.font.pixelSize * 1.6
             onClicked: {
+                if (stackView.currentItem == apiElementCommentView)
+                {
+                    //Force model refresh
+                    apiElementsView.apiId = apiElementsView.apiId
+                }
+
                 if (stackView.depth > 1) {
                     stackView.pop()
-                } else {
-                    drawer.open()
                 }
             }
         }
@@ -26,33 +31,6 @@ ApplicationWindow {
         Label {
             text: stackView.currentItem.title
             anchors.centerIn: parent
-        }
-    }
-
-    Drawer {
-        id: drawer
-        width: window.width * 0.66
-        height: window.height
-
-        Column {
-            anchors.fill: parent
-
-            ItemDelegate {
-                text: qsTr("Page 1")
-                width: parent.width
-                onClicked: {
-                    stackView.push("Page1Form.qml")
-                    drawer.close()
-                }
-            }
-            ItemDelegate {
-                text: qsTr("Page 2")
-                width: parent.width
-                onClicked: {
-                    stackView.push("Page2Form.qml")
-                    drawer.close()
-                }
-            }
         }
     }
 
@@ -65,6 +43,14 @@ ApplicationWindow {
 
     ApiElementsView {
         id: apiElementsView
+        onApiElementSelected: {
+            apiElementCommentView.refreshModel(api_id, operationId)
+            stackView.push(apiElementCommentView)
+        }
+    }
+
+    ApiElementCommentView {
+        id: apiElementCommentView
 
     }
 
@@ -72,5 +58,6 @@ ApplicationWindow {
         id: stackView
         initialItem: homeForm
         anchors.fill: parent
+
     }
 }
