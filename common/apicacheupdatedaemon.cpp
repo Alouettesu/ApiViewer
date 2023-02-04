@@ -6,7 +6,7 @@
 #include <QMutex>
 #include <QEventLoop>
 #include <functional>
-#include <QApplication>
+#include <QCoreApplication>
 
 #include "apigetter.h"
 #include "apiparser.h"
@@ -38,7 +38,7 @@ void ApiCacheUpdateDaemon::finish()
     m_isRunning = false;
     QMetaObject::invokeMethod(m_timer, &QTimer::stop, Qt::QueuedConnection);
     cancelRequests();
-    QApplication::processEvents();
+    QCoreApplication::processEvents();
 //12600
     m_futureRunningMutex.lock();
     //Просто ждём, пока запущенные процессы завершатся
