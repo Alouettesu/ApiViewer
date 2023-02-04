@@ -5,6 +5,9 @@ SUBDIRS += \
     qml \
     widgets
 
+qml.depends = common
+widgets.depends = common
+
 
 OTHER_FILES += \
     .gitignore
