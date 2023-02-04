@@ -35,7 +35,8 @@ HEADERS += \
 FORMS += \
     mainwindow.ui
 
-
+QMAKE_CLEAN += \
+    apis.db
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

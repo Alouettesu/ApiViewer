@@ -12,6 +12,7 @@ Page {
     signal apiElementSelected(int api_id, string operationId)
     ApiElementsController {
         id: controller
+        objectName: "controller"
     }
 
     property alias apiId: controller.apiId

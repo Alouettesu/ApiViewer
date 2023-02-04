@@ -1,18 +1,7 @@
-//#include "mainwindow.h"
-//#include <QApplication>
-
-//int main(int argc, char *argv[])
-//{
-//    QApplication a(argc, argv);
-//    MainWindow w;
-//    w.show();
-
-//    return a.exec();
-//}
-
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QDebug>
 
 #include "apiscontroller.h"
 #include "apielementscontroller.h"
@@ -21,7 +10,12 @@
 #include "apielementcommentmodel.h"
 
 Database db;
-ApiCacheUpdateDaemon *daemon;
+ApiCacheUpdateDaemon daemon;
+
+void aboutToQuitHandler()
+{
+    daemon.finish();
+}
 
 int main(int argc, char *argv[])
 {
@@ -32,16 +26,18 @@ int main(int argc, char *argv[])
     qmlRegisterType<ApiElementsController>("MyControllers", 1, 0, "ApiElementsController");
     qmlRegisterType<ApiElementCommentModel>("MyControllers", 1, 0, "ApiElementCommentModel");
 
-    daemon = new ApiCacheUpdateDaemon();
-    QObject::connect(&app, &QGuiApplication::aboutToQuit, &app, [daemon](){
-        daemon->finish();
-    });
-    daemon->start();
+
+    QObject::connect(&app, &QCoreApplication::aboutToQuit, &aboutToQuitHandler);
 
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;
+
+    QObject *apiElementsView = engine.rootObjects().at(0)->findChild<QObject*>("apiElementsView");
+    ApiElementsController *apiElementsController = apiElementsView->findChild<ApiElementsController*>("controller");
+    QObject::connect(&daemon, &ApiCacheUpdateDaemon::updated, apiElementsController, &ApiElementsController::refreshModel);
+    daemon.start();
 
 
     return app.exec();

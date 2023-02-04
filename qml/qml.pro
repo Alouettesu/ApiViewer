@@ -48,6 +48,8 @@ QML_DESIGNER_IMPORT_PATH =
 RESOURCES += \
     qml/qml.qrc
 
+QMAKE_CLEAN += \
+    apis.db
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../common/release/ -lApiViewerCommon
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../common/debug/ -lApiViewerCommon

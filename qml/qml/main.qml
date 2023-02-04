@@ -6,7 +6,7 @@ ApplicationWindow {
     visible: true
     width: 640
     height: 480
-    title: qsTr("Stack")
+    title: qsTr("Просмотр публичных API")
 
     header: ToolBar {
         contentHeight: toolButton.implicitHeight
@@ -43,6 +43,7 @@ ApplicationWindow {
 
     ApiElementsView {
         id: apiElementsView
+        objectName: "apiElementsView"
         onApiElementSelected: {
             apiElementCommentView.refreshModel(api_id, operationId)
             stackView.push(apiElementCommentView)
